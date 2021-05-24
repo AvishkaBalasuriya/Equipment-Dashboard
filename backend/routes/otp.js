@@ -9,12 +9,12 @@ module.exports = (()=>{
 
     routes.post('/issue',async(request, respond)=>{
         try{
-            if(!validator.validateEmptyFields(request.body))
-                return respond.status(200).send(config.get("error.emptyFields"))
-
             let data = {
                 email:request.body.contact
             }
+
+            if(!validator.validateEmptyFields(data.email))
+                return respond.status(200).send(config.get("error.emptyFields"))
             
             let helperResult = await otp.issueAnOtp(data) 
             return respond.status(200).send(helperResult)
@@ -27,13 +27,13 @@ module.exports = (()=>{
 
     routes.post('/verify', async(request, respond)=>{
         try{
-            if(!validator.validateEmptyFields(request.body))
-                return respond.status(200).send(config.get("error.emptyFields"))
-
             let data = {
                 userId:request.body.userId,
                 otpCode:request.body.otpCode
             }
+
+            if(!validator.validateEmptyFields(data.userId,data.otpCode))
+                return respond.status(200).send(config.get("error.emptyFields"))
             
             let helperResult = await otp.verifyAnOtp(data) 
             return respond.status(200).send(helperResult)

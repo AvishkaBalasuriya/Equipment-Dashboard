@@ -16,13 +16,13 @@ module.exports = (()=>{
 
     routes.post('/login',async(request, respond)=>{
         try{
-            if(!validator.validateEmptyFields(request.body))
-                return respond.status(200).send(config.get("error.emptyFields"))
-
             let data = {
                 email:request.body.email,
                 password:request.body.password
             }
+
+            if(!validator.validateEmptyFields(data.email,data.password))
+                return respond.status(200).send(config.get("error.emptyFields"))
 
             let helperResult = await login(data) 
             return respond.status(200).send(helperResult)
@@ -35,15 +35,6 @@ module.exports = (()=>{
 
     routes.post('/register',jwtMiddleware,async(request, respond)=>{
         try{
-            if(!validator.validateEmptyFields(request.body))
-                return respond.status(200).send(config.get("error.emptyFields"))
-
-            if(!validator.validateConfirmPassword(request.body))
-                return respond.status(200).send({success:false,message:'Passwords not matching',error:null,code:400,data:null})
-            
-            if(!validator.validatePassword(request.body))
-                return respond.status(200).send({success:false,message:'Password mot matching security criteria',error:null,code:400,data:null})
-
             let data = {
                 email:request.body.email,
                 rawPassword:request.body.password,
@@ -52,6 +43,15 @@ module.exports = (()=>{
                 type:request.body.type,
                 status:false
             }
+
+            if(!validator.validateEmptyFields(data.email,data.rawPassword,data.firstName,data.lastName,data.type))
+                return respond.status(200).send(config.get("error.emptyFields"))
+
+            if(!validator.validateConfirmPassword(request.body))
+                return respond.status(200).send({success:false,message:'Passwords not matching',error:null,code:400,data:null})
+            
+            if(!validator.validatePassword(request.body))
+                return respond.status(200).send({success:false,message:'Password mot matching security criteria',error:null,code:400,data:null})
             
             let helperResult = await register(data) 
             return respond.status(200).send(helperResult)
@@ -64,7 +64,13 @@ module.exports = (()=>{
 
     routes.post('/forget',async(request, respond)=>{
         try{
-            if(!validator.validateEmptyFields(request.body))
+            let data = {
+                otpId:request.body.otpId,
+                password:request.body.password,
+                passwordConfirm:request.body.passwordConfirm,
+            }
+
+            if(!validator.validateEmptyFields(data.otpId,data.password,data.passwordConfirm))
                 return respond.status(200).send(config.get("error.emptyFields"))
                 
             if(!validator.validateConfirmPassword(request.body))
@@ -72,12 +78,6 @@ module.exports = (()=>{
     
             if(!validator.validatePassword(request.body))
                 return respond.status(200).send({success:false,message:'Password mot matching security criteria',error:null,code:400,data:null})
-    
-            let data = {
-                otpId:request.body.otpId,
-                password:request.body.password,
-                passwordConfirm:request.body.passwordConfirm,
-            }
 
             let helperResult = await forget(data) 
             return respond.status(200).send(helperResult)

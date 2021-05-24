@@ -10,9 +10,9 @@ function validateConfirmPassword(requestBody){
     return password===passwordConfirm
 }
 
-function validateEmptyFields(requestBody){
+function validateEmptyFields(...args){
     let is_valid = true
-    Object.entries(requestBody).forEach((arg)=>{
+    args.forEach((arg)=>{
         if(typeof(arg)==Array){
             if(arg.length==0)
                 is_valid=false

@@ -6,7 +6,8 @@
         "host":"webapi.0enqn.mongodb.net",
         "database": "WebApi",
         "user": "WebApi",
-        "password":"webApi2021"
+        "password":"webApi2021",
+        "connectionUrl":"mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
     },
     "email":{
         "user":"avishkabalasuriya980330@gmail.com",

@@ -30,13 +30,11 @@ app.all('*',(req,res)=>{
 const server = app.listen(port,async()=>{
     console.log(`Server started on port: ${port}`)
     try{
-        // mongoose.connect(`mongodb+srv://${config.get("mongodb.user")}:${config.get("mongodb.password")}@${config.get("mongodb.host")}/${config.get("mongodb.database")}?retryWrites=true&w=majority`, 
-        // {useNewUrlParser: true, useUnifiedTopology: true}) 
-        mongoose.connect("mongodb://mongo:27017/EquipmentDashboard?readPreference=primary&appname=MongoDB%20Compass&ssl=false",{useNewUrlParser: true, useUnifiedTopology: true}) 
+        await mongoose.connect("mongodb://localhost:27017/EquipementDashboard?readPreference=primary&appname=MongoDB%20Compass&ssl=false",{useNewUrlParser: true, useUnifiedTopology: true}) 
         console.log("Connected to mongodb database")
 
-        defaultUser(0)
-        defaultUser(1)
+        await defaultUser(0)
+        await defaultUser(1)
         
     }catch(e){
         console.log(e)
