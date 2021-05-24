@@ -7,7 +7,7 @@
         "database": "EquipmentDashboard",
         "user": "",
         "password":"",
-        "connectionUrl":"mongodb://localhost:27017/?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
+        "connectionUrl":"mongodb://mongo:27017/EquipementDashboard?readPreference=primary&appname=MongoDB%20Compass&ssl=false"
     },
     "email":{
         "user":"avishkabalasuriya980330@gmail.com",

@@ -30,7 +30,7 @@ app.all('*',(req,res)=>{
 const server = app.listen(port,async()=>{
     console.log(`Server started on port: ${port}`)
     try{
-        await mongoose.connect("mongodb://localhost:27017/EquipementDashboard?readPreference=primary&appname=MongoDB%20Compass&ssl=false",{useNewUrlParser: true, useUnifiedTopology: true}) 
+        await mongoose.connect(config.get('mongodb.connectionUrl'),{useNewUrlParser: true, useUnifiedTopology: true}) 
         console.log("Connected to mongodb database")
 
         await defaultUser(0)
